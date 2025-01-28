@@ -136,11 +136,13 @@
   <ItemGroup>
     <ClCompile Include="..\glad.c" />
     <ClCompile Include="Core\OpenGL\IndexBuffer.cpp" />
+    <ClCompile Include="Game\World\FolliageChunk.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Core\OpenGL\Shader.cpp" />
     <ClCompile Include="Core\OpenGL\imageLoader\stb_image.cpp" />
     <ClCompile Include="Core\OpenGL\VertexArray.cpp" />
     <ClCompile Include="Core\OpenGL\VertexBuffer.cpp" />
+    <ClCompile Include="Game\World\Plane.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Utils\Defs.h" />
@@ -150,10 +152,14 @@
     <ClInclude Include="Core\OpenGL\VertexArray.h" />
     <ClInclude Include="Core\OpenGL\VertexBuffer.h" />
     <ClInclude Include="Core\OpenGL\IndexBuffer.h" />
+    <ClInclude Include="Game\World\FolliageChunk.h" />
+    <ClInclude Include="Game\World\Plane.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Core\OpenGL\Shaders\shader.fs" />
-    <None Include="Core\OpenGL\Shaders\shader.vs" />
+    <None Include="Core\OpenGL\Shaders\fragmentShader.glsl" />
+    <None Include="Core\OpenGL\Shaders\grassFragmentShader.glsl" />
+    <None Include="Core\OpenGL\Shaders\grassVertexShader.glsl" />
+    <None Include="Core\OpenGL\Shaders\vertexShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

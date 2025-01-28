@@ -5,6 +5,9 @@
 #include "Core/OpenGL/Shader.h"
 #include "Core/OpenGL/Camera.hpp"
 
+#include "World/Plane.h"
+#include "World/FolliageChunk.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -27,6 +30,22 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
+int frameCount = 0;
+double lastTime = 0.0;
+
+
+void calculateFPS() {
+    double currentTime = glfwGetTime();
+    frameCount++;
+
+    // Affiche les FPS toutes les secondes
+    if (currentTime - lastTime >= 1.0) {
+        std::cout << "FPS: " << frameCount << std::endl;
+        frameCount = 0;
+        lastTime = currentTime;
+    }
+}
+
 int main() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -47,17 +66,24 @@ int main() {
         return -1;
     }  
 
+    Plane landscape = Plane(camera, glm::vec3(-0.5f, 0.0f, 0.5f), glm::vec2(100, 100)); 
+    FolliageChunk chunk = FolliageChunk(camera, glm::vec3(0.0f, 0.0f, 0.0f));
+
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Wireframe Mode !!!!
     glEnable(GL_DEPTH_TEST);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
+    glDisable(GL_CULL_FACE); 
+
     while (!glfwWindowShouldClose(window)) {
 
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+
+        calculateFPS();
 
         //inputs
         processInput(window);
@@ -66,6 +92,8 @@ int main() {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        landscape.Draw();
+        chunk.Draw();
         /*glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);*/
 
         //swap buffers
@@ -89,6 +117,11 @@ void processInput(GLFWwindow* window)
         camera->ProcessKeyboard(LEFT, cameraSpeed);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera->ProcessKeyboard(RIGHT, cameraSpeed);
+    if (glfwGetKey(window, GLFW_KEY_F11) == GLFW_PRESS) { 
+        glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, 1920, 1080, 165); 
+        glViewport(0, 0, 1920, 1080); 
+        camera->SetCameraSize(1920, 1080); 
+    }
 }
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)

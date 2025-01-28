@@ -39,6 +39,12 @@
     <ClCompile Include="Core\OpenGL\IndexBuffer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Game\World\Plane.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\World\FolliageChunk.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\OpenGL\Shader.h">
@@ -62,13 +68,21 @@
     <ClInclude Include="Core\Utils\Defs.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Game\World\Plane.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\World\FolliageChunk.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Core\OpenGL\Shaders\shader.fs">
+    <None Include="Core\OpenGL\Shaders\fragmentShader.glsl">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Core\OpenGL\Shaders\shader.vs">
+    <None Include="Core\OpenGL\Shaders\vertexShader.glsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Core\OpenGL\Shaders\grassVertexShader.glsl" />
+    <None Include="Core\OpenGL\Shaders\grassFragmentShader.glsl" />
   </ItemGroup>
 </Project>

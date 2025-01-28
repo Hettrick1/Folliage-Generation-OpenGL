@@ -1,0 +1,37 @@
+#pragma once
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+#include "OpenGL/VertexArray.h"
+#include "OpenGL/VertexBuffer.h"
+#include "OpenGL/IndexBuffer.h"
+
+#include <OpenGL/imageLoader/stb_image.h>
+#include "OpenGL/Shader.h"
+#include "OpenGL/Camera.hpp"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include <iostream>
+#include <vector>
+
+class FolliageChunk
+{
+public:
+	FolliageChunk() = delete;
+	FolliageChunk(Camera* camera, glm::vec3 position);
+	~FolliageChunk();
+	void Draw();
+private:
+	glm::vec3 mPosition;
+	Shader mShader;
+	Camera* mCamera;
+	VertexArray mVao;
+	VertexBuffer mVbo, mInstanceVbo;
+	std::vector<float> mGrassBladeVertices;
+	std::vector<glm::vec3> mGrassPositions;
+};
+
