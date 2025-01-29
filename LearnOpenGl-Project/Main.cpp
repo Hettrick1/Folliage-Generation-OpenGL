@@ -75,8 +75,6 @@ int main() {
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
-    glDisable(GL_CULL_FACE); 
-
     while (!glfwWindowShouldClose(window)) {
 
         float currentFrame = glfwGetTime();

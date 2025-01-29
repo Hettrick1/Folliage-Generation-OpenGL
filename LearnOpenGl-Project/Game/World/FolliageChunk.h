@@ -25,6 +25,7 @@ public:
 	FolliageChunk(Camera* camera, glm::vec3 position);
 	~FolliageChunk();
 	void Draw();
+	glm::vec3 GetPosition();
 private:
 	glm::vec3 mPosition;
 	Shader mShader;

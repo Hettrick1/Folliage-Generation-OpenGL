@@ -1,6 +1,7 @@
 #pragma once
 
-#define RENDER_DISTANCE 16
+#define RENDER_DISTANCE 30
+#define CHUNK_SIZE 1
 
 #define DEFAULT_WINDOW_X 1280
 #define DEFAULT_WINDOW_Y 800

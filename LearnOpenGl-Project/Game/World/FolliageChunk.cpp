@@ -3,7 +3,7 @@
 FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
 	: mCamera(camera), mPosition(position), mVbo(GL_ARRAY_BUFFER), mInstanceVbo(GL_ARRAY_BUFFER), mShader("Core/OpenGL/Shaders/grassVertexShader.glsl", "Core/OpenGL/Shaders/grassFragmentShader.glsl")
 {
-    std::vector<float> mGrassBladeVertices = {    
+    mGrassBladeVertices = {    
         // Triangle 1
         0.0f, 0.0f, 0.0f,  // Bas gauche
         0.05f, 0.0f, 0.0f,  // Bas droite
@@ -29,7 +29,8 @@ FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
         0.025f, 0.0f, 0.7f,  // Haut gauche
         0.0f, 0.0f, 0.5f   // Bas gauche
     };
-    for (int i = 0; i < 1000; ++i) {
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
+    for (int i = 0; i < 100; ++i) {
         float x = (rand() % 100) / 100.0f;
         float y = (rand() % 100) / 100.0f;
         mGrassPositions.push_back(glm::vec3(x, y, 0.0f));
@@ -66,6 +67,11 @@ void FolliageChunk::Draw()
 
     // Dessiner les brins d'herbe avec instancing
     mVao.Bind();
-    glDrawArraysInstanced(GL_TRIANGLES, 0, 30, 1000);
+    glDrawArraysInstanced(GL_TRIANGLES, 0, mGrassBladeVertices.size() / 3, mGrassPositions.size()); 
     mVao.Unbind();
+}
+
+glm::vec3 FolliageChunk::GetPosition()
+{
+    return mPosition;
 }

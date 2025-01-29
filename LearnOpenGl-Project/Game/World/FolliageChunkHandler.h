@@ -29,6 +29,6 @@ public:
 	void DrawChunks();
 private:
 	Camera* mCamera;
-	std::vector<FolliageChunk> mActiveChunks;
-	std::vector<FolliageChunk> mUnActiveChunks;
+	std::vector<FolliageChunk*> mActiveChunks; // here it's pointers because not all my chuks are the same size
+	std::vector<FolliageChunk*> mUnActiveChunks;
 };
