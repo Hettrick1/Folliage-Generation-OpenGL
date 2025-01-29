@@ -6,17 +6,32 @@ FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
     std::vector<float> mGrassBladeVertices = {    
         // Triangle 1
         0.0f, 0.0f, 0.0f,  // Bas gauche
-        0.1f, 0.0f, 0.0f,  // Bas droite
-        0.1f, 0.0f, 0.5f,  // Haut droite
+        0.05f, 0.0f, 0.0f,  // Bas droite
+        0.05f, 0.0f, 0.3f,  // Haut droite
     
         // Triangle 2
-        0.1f, 0.0f, 0.5f,  // Haut droite
+        0.05f, 0.0f, 0.3f,  // Haut droite
+        0.0f, 0.0f, 0.3f,  // Haut gauche
+        0.0f, 0.0f, 0.0f,   // Bas gauche
+
+        // Triangle 3
+        0.0f, 0.0f, 0.3f,  // Bas gauche
+        0.05f, 0.0f, 0.3f,  // Bas droite
+        0.05f, 0.0f, 0.5f,  // Haut droite
+
+        // Triangle 4
+        0.05f, 0.0f, 0.5f,  // Haut droite
         0.0f, 0.0f, 0.5f,  // Haut gauche
-        0.0f, 0.0f, 0.0f   // Bas gauche
+        0.0f, 0.0f, 0.3f,   // Bas gauche
+
+        // Triangle 5
+        0.05f, 0.0f, 0.5f,  // Haut droite
+        0.025f, 0.0f, 0.7f,  // Haut gauche
+        0.0f, 0.0f, 0.5f   // Bas gauche
     };
     for (int i = 0; i < 1000; ++i) {
-        float x = (rand() % 100) / 10.0f;
-        float y = (rand() % 100) / 10.0f;
+        float x = (rand() % 100) / 100.0f;
+        float y = (rand() % 100) / 100.0f;
         mGrassPositions.push_back(glm::vec3(x, y, 0.0f));
     }
     mVao.Bind();
@@ -51,6 +66,6 @@ void FolliageChunk::Draw()
 
     // Dessiner les brins d'herbe avec instancing
     mVao.Bind();
-    glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 1000);
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 30, 1000);
     mVao.Unbind();
 }

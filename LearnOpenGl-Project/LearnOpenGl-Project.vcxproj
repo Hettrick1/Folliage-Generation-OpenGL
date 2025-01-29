@@ -137,6 +137,7 @@
     <ClCompile Include="..\glad.c" />
     <ClCompile Include="Core\OpenGL\IndexBuffer.cpp" />
     <ClCompile Include="Game\World\FolliageChunk.cpp" />
+    <ClCompile Include="Game\World\FolliageChunkHandler.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Core\OpenGL\Shader.cpp" />
     <ClCompile Include="Core\OpenGL\imageLoader\stb_image.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Core\OpenGL\VertexBuffer.h" />
     <ClInclude Include="Core\OpenGL\IndexBuffer.h" />
     <ClInclude Include="Game\World\FolliageChunk.h" />
+    <ClInclude Include="Game\World\FolliageChunkHandler.h" />
     <ClInclude Include="Game\World\Plane.h" />
   </ItemGroup>
   <ItemGroup>

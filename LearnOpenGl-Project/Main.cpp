@@ -6,7 +6,7 @@
 #include "Core/OpenGL/Camera.hpp"
 
 #include "World/Plane.h"
-#include "World/FolliageChunk.h"
+#include "World/FolliageChunkHandler.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -66,8 +66,8 @@ int main() {
         return -1;
     }  
 
-    Plane landscape = Plane(camera, glm::vec3(-0.5f, 0.0f, 0.5f), glm::vec2(100, 100)); 
-    FolliageChunk chunk = FolliageChunk(camera, glm::vec3(0.0f, 0.0f, 0.0f));
+    Plane landscape = Plane(camera, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(100, 100)); 
+    FolliageChunkHandler chunkHandler = FolliageChunkHandler(camera);
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Wireframe Mode !!!!
     glEnable(GL_DEPTH_TEST);
@@ -93,7 +93,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         landscape.Draw();
-        chunk.Draw();
+        chunkHandler.DrawChunks();
         /*glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);*/
 
         //swap buffers
