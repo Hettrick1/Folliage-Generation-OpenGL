@@ -6,6 +6,8 @@ layout (location = 2) in float a_Rotation;
 
 uniform mat4 u_MVP;
 
+out vec3 FragPos;
+
 void main()
 {
     float c = cos(a_Rotation);
@@ -19,6 +21,8 @@ void main()
 
     vec4 rotatedPosition = rotationMatrix * vec4(a_Position, 1.0);
     vec4 worldPosition = vec4(a_InstancePosition, 1.0) + rotatedPosition;
+
+    FragPos = worldPosition.xyz;
 
     gl_Position = u_MVP * worldPosition;
 }
