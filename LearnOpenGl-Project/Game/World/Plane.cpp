@@ -24,7 +24,6 @@ Plane::~Plane()
 void Plane::Draw()
 {
     if (mVertices.size() > 0) {
-        // Charger le shader et transmettre les matrices
         mShader.Use();
         glm::mat4 model = glm::translate(glm::mat4(1.0f), mPosition); 
         glm::mat4 view = mCamera->GetViewMatrix(); 
@@ -32,7 +31,6 @@ void Plane::Draw()
         glm::mat4 mvp = projection * view * model; 
 
         mShader.SetMat4("u_MVP", mvp);
-        // Dessiner
         mVao.Bind();
         glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
         mVao.Unbind();

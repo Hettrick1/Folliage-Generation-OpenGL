@@ -29,11 +29,13 @@ FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
         0.025f, 0.0f, 0.7f,  // Haut gauche
         0.0f, 0.0f, 0.5f   // Bas gauche
     };
+
     std::srand(static_cast<unsigned>(std::time(nullptr)));
-    for (int i = 0; i < 100; ++i) {
-        float x = (rand() % 100) / 100.0f;
-        float y = (rand() % 100) / 100.0f;
-        mGrassPositions.push_back(glm::vec3(x, y, 0.0f));
+    for (int i = 0; i < 3000 ; ++i) {
+        float x = (rand() % 100) / 50.0f * CHUNK_SIZE;
+        float y = (rand() % 100) / 50.0f * CHUNK_SIZE;
+        float rotation = (rand() % 360) * (PI / 270.0f);
+        mGrassInstances.push_back({ glm::vec3(x, y, 0.0f), rotation});
     }
     mVao.Bind();
 
@@ -41,10 +43,14 @@ FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
     mVbo.VertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0); // Positions
     glEnableVertexAttribArray(0);
 
-    mInstanceVbo.BufferData(mGrassPositions.size() * sizeof(glm::vec3), mGrassPositions.data(), GL_STATIC_DRAW);
-    mInstanceVbo.VertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    mInstanceVbo.BufferData(mGrassInstances.size() * sizeof(GrassInstanceData), mGrassInstances.data(), GL_STATIC_DRAW);
+    mInstanceVbo.VertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GrassInstanceData), (void*)offsetof(GrassInstanceData, position));
     glEnableVertexAttribArray(1);
     glVertexAttribDivisor(1, 1);
+
+    mInstanceVbo.VertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(GrassInstanceData), (void*)offsetof(GrassInstanceData, rotation));
+    glEnableVertexAttribArray(2);
+    glVertexAttribDivisor(2, 1);
 
     mVao.Unbind();
 }
@@ -57,7 +63,6 @@ void FolliageChunk::Draw()
 {
     mShader.Use();
 
-    // Calculer la matrice MVP
     glm::mat4 model = glm::translate(glm::mat4(1.0f), mPosition);
     glm::mat4 view = mCamera->GetViewMatrix();
     glm::mat4 projection = mCamera->GetProjectionMatrix();
@@ -65,9 +70,8 @@ void FolliageChunk::Draw()
 
     mShader.SetMat4("u_MVP", mvp);
 
-    // Dessiner les brins d'herbe avec instancing
     mVao.Bind();
-    glDrawArraysInstanced(GL_TRIANGLES, 0, mGrassBladeVertices.size() / 3, mGrassPositions.size()); 
+    glDrawArraysInstanced(GL_TRIANGLES, 0, mGrassBladeVertices.size() / 3, mGrassInstances.size()); 
     mVao.Unbind();
 }
 

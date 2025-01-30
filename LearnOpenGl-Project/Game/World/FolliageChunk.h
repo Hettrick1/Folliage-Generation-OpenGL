@@ -10,6 +10,8 @@
 #include <OpenGL/imageLoader/stb_image.h>
 #include "OpenGL/Shader.h"
 #include "OpenGL/Camera.hpp"
+#include "Utils/Defs.h"
+#include "Utils/GrassInstanceData.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -33,6 +35,6 @@ private:
 	VertexArray mVao;
 	VertexBuffer mVbo, mInstanceVbo;
 	std::vector<float> mGrassBladeVertices;
-	std::vector<glm::vec3> mGrassPositions;
+	std::vector<GrassInstanceData> mGrassInstances;
 };
 
