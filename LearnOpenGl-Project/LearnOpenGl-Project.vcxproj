@@ -153,6 +153,7 @@
     <ClInclude Include="Core\OpenGL\VertexArray.h" />
     <ClInclude Include="Core\OpenGL\VertexBuffer.h" />
     <ClInclude Include="Core\OpenGL\IndexBuffer.h" />
+    <ClInclude Include="Core\Utils\FastNoiseLite.h" />
     <ClInclude Include="Core\Utils\GrassInstanceData.h" />
     <ClInclude Include="Game\World\FolliageChunk.h" />
     <ClInclude Include="Game\World\FolliageChunkHandler.h" />

@@ -7,4 +7,5 @@
 struct GrassInstanceData {
     glm::vec3 position;
     float rotation;
+    float windStrengh;
 };

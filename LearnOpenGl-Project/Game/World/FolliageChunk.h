@@ -12,6 +12,7 @@
 #include "OpenGL/Camera.hpp"
 #include "Utils/Defs.h"
 #include "Utils/GrassInstanceData.h"
+#include "Utils/FastNoiseLite.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -36,5 +37,6 @@ private:
 	VertexBuffer mVbo, mInstanceVbo;
 	std::vector<float> mGrassBladeVertices;
 	std::vector<GrassInstanceData> mGrassInstances;
+	FastNoiseLite mWindStrenghNoise;
 };
 

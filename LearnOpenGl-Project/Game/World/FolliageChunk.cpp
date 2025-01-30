@@ -30,12 +30,16 @@ FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
         0.0f, 0.0f, 0.5f   // Bas gauche
     };
 
+    mWindStrenghNoise.SetSeed(1234);
+    mWindStrenghNoise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+
     std::srand(static_cast<unsigned>(std::time(nullptr)));
     for (int i = 0; i < 3000 ; ++i) {
         float x = (rand() % 100) / 50.0f * CHUNK_SIZE;
         float y = (rand() % 100) / 50.0f * CHUNK_SIZE;
         float rotation = (rand() % 360) * (PI / 270.0f);
-        mGrassInstances.push_back({ glm::vec3(x, y, 0.0f), rotation});
+        float strengh = ((mWindStrenghNoise.GetNoise(mPosition.x + x, mPosition.y + y) + 1) / 2) * 2;
+        mGrassInstances.push_back({ glm::vec3(x, y, 0.0f), rotation, strengh});
     }
     mVao.Bind();
 
@@ -52,6 +56,9 @@ FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
     glEnableVertexAttribArray(2);
     glVertexAttribDivisor(2, 1);
 
+    mInstanceVbo.VertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(GrassInstanceData), (void*)offsetof(GrassInstanceData, windStrengh));
+    glEnableVertexAttribArray(3);
+    glVertexAttribDivisor(3, 1);
     mVao.Unbind();
 }
 
@@ -69,6 +76,7 @@ void FolliageChunk::Draw()
     glm::mat4 mvp = projection * view * model;
 
     mShader.SetMat4("u_MVP", mvp);
+    mShader.SetFloat("u_timer", glfwGetTime());
 
     mVao.Bind();
     glDrawArraysInstanced(GL_TRIANGLES, 0, mGrassBladeVertices.size() / 3, mGrassInstances.size()); 

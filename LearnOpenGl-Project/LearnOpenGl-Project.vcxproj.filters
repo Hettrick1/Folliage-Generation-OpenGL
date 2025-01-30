@@ -83,6 +83,9 @@
     <ClInclude Include="Core\Utils\GrassInstanceData.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Utils\FastNoiseLite.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\OpenGL\Shaders\fragmentShader.glsl">
