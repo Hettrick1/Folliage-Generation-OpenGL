@@ -6,28 +6,28 @@ FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
     mGrassBladeVertices = {    
         // Triangle 1
         0.0f, 0.0f, 0.0f,  // Bas gauche
-        0.05f, 0.0f, 0.0f,  // Bas droite
-        0.05f, 0.0f, 0.3f,  // Haut droite
+        0.1f, 0.0f, 0.0f,  // Bas droite
+        0.1f, 0.0f, 0.3f,  // Haut droite
     
         // Triangle 2
-        0.05f, 0.0f, 0.3f,  // Haut droite
+        0.1f, 0.0f, 0.3f,  // Haut droite
         0.0f, 0.0f, 0.3f,  // Haut gauche
         0.0f, 0.0f, 0.0f,   // Bas gauche
 
         // Triangle 3
         0.0f, 0.0f, 0.3f,  // Bas gauche
-        0.05f, 0.0f, 0.3f,  // Bas droite
-        0.05f, 0.0f, 0.5f,  // Haut droite
+        0.1f, 0.0f, 0.3f,  // Bas droite
+        0.075f, 0.0f, 0.5f,  // Haut droite
 
         // Triangle 4
-        0.05f, 0.0f, 0.5f,  // Haut droite
-        0.0f, 0.0f, 0.5f,  // Haut gauche
+        0.075f, 0.0f, 0.5f,  // Haut droite
+        0.025f, 0.0f, 0.5f,  // Haut gauche
         0.0f, 0.0f, 0.3f,   // Bas gauche
 
         // Triangle 5
-        0.05f, 0.0f, 0.5f,  // Haut droite
-        0.025f, 0.0f, 0.7f,  // Haut gauche
-        0.0f, 0.0f, 0.5f   // Bas gauche
+        0.075f, 0.0f, 0.5f,  // Haut droite
+        0.05f, 0.0f, 0.7f,  // Haut gauche
+        0.025f, 0.0f, 0.5f   // Bas gauche
     };
 
     mWindStrenghNoise.SetSeed(1234);
