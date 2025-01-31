@@ -38,8 +38,9 @@ FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
         float x = (rand() % 100) / 50.0f * CHUNK_SIZE;
         float y = (rand() % 100) / 50.0f * CHUNK_SIZE;
         float rotation = (rand() % 360) * (PI / 270.0f);
-        float strengh = ((mWindStrenghNoise.GetNoise(mPosition.x + x, mPosition.y + y) + 1) / 2) * 2;
-        mGrassInstances.push_back({ glm::vec3(x, y, 0.0f), rotation, strengh});
+        float bend = (rand() % 360) * (PI / 270.0f);
+        float strengh = mWindStrenghNoise.GetNoise(mPosition.x + x, mPosition.y + y);
+        mGrassInstances.push_back({ glm::vec3(x, y, 0.0f), rotation, strengh * 5, bend});
     }
     mVao.Bind();
 
@@ -59,6 +60,10 @@ FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
     mInstanceVbo.VertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(GrassInstanceData), (void*)offsetof(GrassInstanceData, windStrengh));
     glEnableVertexAttribArray(3);
     glVertexAttribDivisor(3, 1);
+
+    mInstanceVbo.VertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(GrassInstanceData), (void*)offsetof(GrassInstanceData, bend));
+    glEnableVertexAttribArray(4);
+    glVertexAttribDivisor(4, 1);
     mVao.Unbind();
 }
 
