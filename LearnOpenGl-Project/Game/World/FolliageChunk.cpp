@@ -37,8 +37,8 @@ FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
     for (int i = 0; i < 3000 ; ++i) {
         float x = (rand() % 100) / 50.0f * CHUNK_SIZE;
         float y = (rand() % 100) / 50.0f * CHUNK_SIZE;
-        float rotation = (rand() % 360) * (PI / 270.0f);
-        float bend = (rand() % 360) * (PI / 270.0f);
+        float rotation = -(rand() % 90) * (PI / 180);
+        float bend = (rand() % 360) * (PI / 180.0f);
         float strengh = mWindStrenghNoise.GetNoise(mPosition.x + x, mPosition.y + y);
         mGrassInstances.push_back({ glm::vec3(x, y, 0.0f), rotation, strengh * 5, bend});
     }

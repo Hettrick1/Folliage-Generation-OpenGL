@@ -9,11 +9,41 @@ layout (location = 4) in float a_Bend;
 uniform mat4 u_MVP;
 uniform float u_timer;
 
-out float v_HeightPercentage; // Changer le nom pour éviter le conflit avec la variable locale
+out float v_HeightPercentage;
+
+float hash( vec2 a )
+{
+
+    return fract( sin( a.x * 3433.8 + a.y * 3843.98 ) * 45933.8 );
+
+}
+
+float noise( vec2 U )
+{
+    vec2 id = floor( U );
+          U = fract( U );
+    U *= U * ( 3. - 2. * U );  
+
+    vec2 A = vec2( hash(id)            , hash(id + vec2(0,1)) ),  
+         B = vec2( hash(id + vec2(1,0)), hash(id + vec2(1,1)) ),  
+         C = mix( A, B, U.x);
+
+    return mix( C.x, C.y, U.y );
+}
+
+float remap(float value, float inMin, float inMax, float outMin, float outMax)
+{
+    return outMin + (value - inMin) * (outMax - outMin) / (inMax - inMin);
+}
+
+float easeIn(float x, float power)
+{
+    return pow(x, power);
+}
 
 void main()
 {
-    v_HeightPercentage = a_Position.z / 0.7; // Stocker la hauteur AVANT toute transformation
+    v_HeightPercentage = a_Position.z / 0.7;
 
     float c = cos(a_Rotation);
     float s = sin(a_Rotation);
@@ -23,12 +53,21 @@ void main()
         0.0, 0.0, 1.0, 0.0,
         0.0, 0.0, 0.0, 1.0
     );
+    float bendRot = 0;
+    if(v_HeightPercentage > 0){
+        bendRot = a_Bend * 0.1 * v_HeightPercentage;
+    }
+    float strengh = a_Strengh;
 
-    float bendRot = a_Bend * 0.25 * v_HeightPercentage;
-    float strengh = a_Strengh * 5;
-    float noiseSample = sin(u_timer + a_InstancePosition.x) * strengh;
-    bendRot += noiseSample * (0.1 * v_HeightPercentage);
-    bendRot = mix(-1.0, 1.0, smoothstep(-1.0, 1.0, bendRot));
+    float windDir = noise(vec2(a_InstancePosition.x * 0.5 + 0.15 * u_timer, a_InstancePosition.y * 0.5 + 0.15 * u_timer));
+    windDir = remap(windDir, -1.0, 1.0, 0.0, 6.28318);
+
+    float windNoiseSample = noise(vec2(a_InstancePosition.x * 0.5 + u_timer, a_InstancePosition.y * 0.5 + u_timer));
+    
+    float windLeanAngle = remap(windNoiseSample, -1.0, 1.0, 0.25, 1.0);
+    windLeanAngle = easeIn(windLeanAngle, 10.0) * 1.25;
+
+    bendRot += (windLeanAngle * v_HeightPercentage);
 
     float y = cos(bendRot);
     float z = sin(bendRot);
