@@ -62,10 +62,10 @@ void main()
     float windDir = noise(vec2((a_Position.x + a_InstancePosition.x) * 0.5 + 0.15 * u_timer, (a_Position.y + a_InstancePosition.y) * 0.5 + 0.15 * u_timer));
     windDir = remap(windDir, -1.0, 1.0, 0.0, 6.28318);
 
-    float windNoiseSample = noise(vec2((a_Position.x + a_InstancePosition.x) * 0.5 + u_timer, (a_Position.y + a_InstancePosition.y) * 0.5 + u_timer));
+    float windNoiseSample = noise(vec2((a_Position.x + a_InstancePosition.x) * 0.8 + u_timer, (a_Position.y + a_InstancePosition.y) * 0.8 + u_timer));
     
     float windLeanAngle = remap(windNoiseSample, -1.0, 1.0, 0.25, 1.0);
-    windLeanAngle = easeIn(windLeanAngle, 10.0) * 1.25;
+    windLeanAngle = easeIn(windLeanAngle, 7.0) * 1.75;
 
     bendRot += (windLeanAngle * v_HeightPercentage);
 
