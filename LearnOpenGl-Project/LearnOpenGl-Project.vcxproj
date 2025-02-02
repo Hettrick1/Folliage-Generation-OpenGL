@@ -136,8 +136,10 @@
   <ItemGroup>
     <ClCompile Include="..\glad.c" />
     <ClCompile Include="Core\OpenGL\IndexBuffer.cpp" />
+    <ClCompile Include="Core\Utils\CubeTextureMap.cpp" />
     <ClCompile Include="Game\World\FolliageChunk.cpp" />
     <ClCompile Include="Game\World\FolliageChunkHandler.cpp" />
+    <ClCompile Include="Game\World\Sky.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Core\OpenGL\Shader.cpp" />
     <ClCompile Include="Core\OpenGL\imageLoader\stb_image.cpp" />
@@ -146,6 +148,7 @@
     <ClCompile Include="Game\World\Plane.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\Utils\CubeTextureMap.h" />
     <ClInclude Include="Core\Utils\Defs.h" />
     <ClInclude Include="Core\OpenGL\Camera.hpp" />
     <ClInclude Include="Core\OpenGL\Shader.h" />
@@ -158,11 +161,14 @@
     <ClInclude Include="Game\World\FolliageChunk.h" />
     <ClInclude Include="Game\World\FolliageChunkHandler.h" />
     <ClInclude Include="Game\World\Plane.h" />
+    <ClInclude Include="Game\World\Sky.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\OpenGL\Shaders\fragmentShader.glsl" />
     <None Include="Core\OpenGL\Shaders\grassFragmentShader.glsl" />
     <None Include="Core\OpenGL\Shaders\grassVertexShader.glsl" />
+    <None Include="Core\OpenGL\Shaders\skyFragmentShader.glsl" />
+    <None Include="Core\OpenGL\Shaders\skyVertexShader.glsl" />
     <None Include="Core\OpenGL\Shaders\vertexShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

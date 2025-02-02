@@ -48,6 +48,12 @@
     <ClCompile Include="Game\World\FolliageChunkHandler.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Utils\CubeTextureMap.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\World\Sky.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\OpenGL\Shader.h">
@@ -86,6 +92,12 @@
     <ClInclude Include="Core\Utils\FastNoiseLite.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Utils\CubeTextureMap.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\World\Sky.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\OpenGL\Shaders\fragmentShader.glsl">
@@ -96,5 +108,7 @@
     </None>
     <None Include="Core\OpenGL\Shaders\grassVertexShader.glsl" />
     <None Include="Core\OpenGL\Shaders\grassFragmentShader.glsl" />
+    <None Include="Core\OpenGL\Shaders\skyVertexShader.glsl" />
+    <None Include="Core\OpenGL\Shaders\skyFragmentShader.glsl" />
   </ItemGroup>
 </Project>
