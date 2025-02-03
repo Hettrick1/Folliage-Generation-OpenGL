@@ -73,6 +73,7 @@ FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
 
 FolliageChunk::~FolliageChunk()
 {
+
 }
 
 void FolliageChunk::Draw()

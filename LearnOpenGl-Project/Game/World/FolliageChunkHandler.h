@@ -18,6 +18,9 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <vector>
+#include <unordered_set>
+#include <unordered_map>
+#include <algorithm>
 
 class FolliageChunkHandler
 {
@@ -26,9 +29,13 @@ public:
 	~FolliageChunkHandler();
 	void LoadChunks(int sizeX, int sizeY);
 	void UpdateChunks();
+	bool IsChunkInFrustum(const glm::vec3& chunkPosition);
 	void DrawChunks();
 private:
 	Camera* mCamera;
-	std::vector<FolliageChunk*> mActiveChunks; // here it's pointers because not all my chuks are the same size
+	std::vector<FolliageChunk*> mActiveChunks;
 	std::vector<FolliageChunk*> mUnActiveChunks;
+	glm::vec3 mPrevCameraPos;
+	glm::vec3 mPrevCameraRot;
+	glm::vec2 mPrevViewportSize;
 };
