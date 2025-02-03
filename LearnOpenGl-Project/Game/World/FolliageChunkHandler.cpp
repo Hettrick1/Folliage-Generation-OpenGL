@@ -1,20 +1,5 @@
 #include "FolliageChunkHandler.h"
 
-struct ChunkHash {
-    size_t operator()(const std::pair<int, int>& pos) const {
-        return std::hash<int>()(pos.first) ^ (std::hash<int>()(pos.second) << 1);
-    }
-};
-
-struct ChunkEqual {
-    bool operator()(const std::pair<int, int>& a, const std::pair<int, int>& b) const {
-        return a.first == b.first && a.second == b.second;
-    }
-};
-
-std::unordered_map<std::pair<int, int>, FolliageChunk*, ChunkHash, ChunkEqual> activeChunks;
-std::unordered_map<std::pair<int, int>, FolliageChunk*, ChunkHash, ChunkEqual> unactiveChunks;
-
 FolliageChunkHandler::FolliageChunkHandler(Camera* camera)
     : mCamera(camera)
 {
@@ -23,10 +8,10 @@ FolliageChunkHandler::FolliageChunkHandler(Camera* camera)
 
 FolliageChunkHandler::~FolliageChunkHandler()
 {
-    for (auto& pair : activeChunks) delete pair.second;
-    for (auto& pair : unactiveChunks) delete pair.second;
-    activeChunks.clear();
-    unactiveChunks.clear();
+    for (auto& pair : mActiveChunks) delete pair.second;
+    for (auto& pair : mUnactiveChunks) delete pair.second;
+    mActiveChunks.clear();
+    mUnactiveChunks.clear();
 }
 
 void FolliageChunkHandler::LoadChunks(int sizeX, int sizeY)
@@ -39,10 +24,10 @@ void FolliageChunkHandler::LoadChunks(int sizeX, int sizeY)
 
             bool isInFrustum = IsChunkInFrustum(chunkPosition);
             if (isInFrustum) {
-                activeChunks[{i, j}] = newChunk;
+                mActiveChunks[{i, j}] = newChunk;
             }
             else {
-                unactiveChunks[{i, j}] = newChunk;
+                mUnactiveChunks[{i, j}] = newChunk;
             }
 
             count++;
@@ -62,7 +47,7 @@ void FolliageChunkHandler::UpdateChunks()
         int camChunkX = static_cast<int>(cameraPos.x / CHUNK_SIZE);
         int camChunkY = static_cast<int>(cameraPos.y / CHUNK_SIZE);
 
-        for (auto it = activeChunks.begin(); it != activeChunks.end(); )
+        for (auto it = mActiveChunks.begin(); it != mActiveChunks.end(); )
         {
             FolliageChunk* chunk = it->second;
             glm::vec3 chunkPos = chunk->GetPosition();
@@ -71,8 +56,8 @@ void FolliageChunkHandler::UpdateChunks()
 
             if (!IsChunkInFrustum(chunkPos))
             {
-                unactiveChunks[{chunkX, chunkY}] = chunk;
-                it = activeChunks.erase(it);
+                mUnactiveChunks[{chunkX, chunkY}] = chunk;
+                it = mActiveChunks.erase(it);
             }
             else
             {
@@ -80,7 +65,7 @@ void FolliageChunkHandler::UpdateChunks()
             }
         }
 
-        for (auto it = unactiveChunks.begin(); it != unactiveChunks.end(); )
+        for (auto it = mUnactiveChunks.begin(); it != mUnactiveChunks.end(); )
         {
             FolliageChunk* chunk = it->second;
             glm::vec3 chunkPos = chunk->GetPosition();
@@ -89,8 +74,8 @@ void FolliageChunkHandler::UpdateChunks()
 
             if (IsChunkInFrustum(chunkPos))
             {
-                activeChunks[{chunkX, chunkY}] = chunk;
-                it = unactiveChunks.erase(it);
+                mActiveChunks[{chunkX, chunkY}] = chunk;
+                it = mUnactiveChunks.erase(it);
             }
             else
             {
@@ -130,7 +115,7 @@ bool FolliageChunkHandler::IsChunkInFrustum(const glm::vec3& chunkPosition)
 
 void FolliageChunkHandler::DrawChunks()
 {
-    for (auto& pair : activeChunks) {
+    for (auto& pair : mActiveChunks) {
         pair.second->Draw();
     }
 }

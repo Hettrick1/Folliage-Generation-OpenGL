@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#define RENDER_DISTANCE 15
+#define RENDER_DISTANCE 20
 #define CHUNK_SIZE 5
 #define PI 3.14159265358979323846264338327950288419716939937510582
 

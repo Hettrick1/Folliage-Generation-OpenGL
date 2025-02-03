@@ -18,9 +18,21 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <vector>
-#include <unordered_set>
+
 #include <unordered_map>
 #include <algorithm>
+
+struct ChunkHash {
+	size_t operator()(const std::pair<int, int>& pos) const {
+		return std::hash<int>()(pos.first) ^ (std::hash<int>()(pos.second) << 1);
+	}
+};
+
+struct ChunkEqual {
+	bool operator()(const std::pair<int, int>& a, const std::pair<int, int>& b) const {
+		return a.first == b.first && a.second == b.second;
+	}
+};
 
 class FolliageChunkHandler
 {
@@ -33,9 +45,9 @@ public:
 	void DrawChunks();
 private:
 	Camera* mCamera;
-	std::vector<FolliageChunk*> mActiveChunks;
-	std::vector<FolliageChunk*> mUnActiveChunks;
 	glm::vec3 mPrevCameraPos;
 	glm::vec3 mPrevCameraRot;
 	glm::vec2 mPrevViewportSize;
+	std::unordered_map<std::pair<int, int>, FolliageChunk*, ChunkHash, ChunkEqual> mActiveChunks;
+	std::unordered_map<std::pair<int, int>, FolliageChunk*, ChunkHash, ChunkEqual> mUnactiveChunks;
 };
