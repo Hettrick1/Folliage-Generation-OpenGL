@@ -38,5 +38,8 @@ private:
 	std::vector<float> mGrassBladeVertices;
 	std::vector<GrassInstanceData> mGrassInstances;
 	FastNoiseLite mWindStrenghNoise;
+	glm::vec3 mLightDir;
+	glm::vec3 mLightColor;
+	glm::vec3 mAmbientColor;
 };
 

@@ -1,9 +1,5 @@
 #include "FolliageChunk.h"
 
-glm::vec3 lightDir = glm::normalize(glm::vec3(-1.0f, -1.0f, -0.5f)); // Direction inclinée
-glm::vec3 lightColor = glm::vec3(1.2f, 1.0f, 0.8f); // Lumière blanche chaude
-glm::vec3 ambientColor = glm::vec3(0.2f, 0.3f, 0.2f); // Lumière ambiante douce
-
 FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
 	: mCamera(camera), mPosition(position), mVbo(GL_ARRAY_BUFFER), mInstanceVbo(GL_ARRAY_BUFFER), mShader("Core/OpenGL/Shaders/grassVertexShader.glsl", "Core/OpenGL/Shaders/grassFragmentShader.glsl")
 {
@@ -34,6 +30,10 @@ FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
         0.025f, 0.0f, 0.5f   // Bas gauche
     };
 
+    mLightDir = glm::normalize(glm::vec3(-1.0f, -1.0f, -0.5f));
+    mLightColor = glm::vec3(1.2f, 1.0f, 0.8f);
+    mAmbientColor = glm::vec3(0.2f, 0.3f, 0.2f);
+
     mWindStrenghNoise.SetSeed(1234);
     mWindStrenghNoise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 
@@ -49,7 +49,7 @@ FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
     mVao.Bind();
 
     mVbo.BufferData(mGrassBladeVertices.size() * sizeof(float), mGrassBladeVertices.data(), GL_STATIC_DRAW);
-    mVbo.VertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0); // Positions
+    mVbo.VertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
     mInstanceVbo.BufferData(mGrassInstances.size() * sizeof(GrassInstanceData), mGrassInstances.data(), GL_STATIC_DRAW);
@@ -87,9 +87,9 @@ void FolliageChunk::Draw()
     mShader.SetMat4("u_MVP", mvp);
     mShader.SetFloat("u_timer", glfwGetTime());
 
-    mShader.SetVec3("u_LightDirection", lightDir);
-    mShader.SetVec3("u_LightColor", lightColor);
-    mShader.SetVec3("u_AmbientColor", ambientColor);
+    mShader.SetVec3("u_LightDirection", mLightDir);
+    mShader.SetVec3("u_LightColor", mLightColor);
+    mShader.SetVec3("u_AmbientColor", mAmbientColor);
 
     mVao.Bind();
     glDrawArraysInstanced(GL_TRIANGLES, 0, mGrassBladeVertices.size() / 3, mGrassInstances.size()); 
