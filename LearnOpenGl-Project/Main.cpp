@@ -67,7 +67,7 @@ int main() {
         return -1;
     }  
 
-    Plane landscape = Plane(camera, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(100, 100)); 
+    Plane landscape = Plane(camera, glm::vec3(-75.0f, -75.0f, 0.0f), glm::vec2(150, 150)); 
     FolliageChunkHandler chunkHandler = FolliageChunkHandler(camera);
     Sky skyBox = Sky(camera, camera->GetPosition());
 

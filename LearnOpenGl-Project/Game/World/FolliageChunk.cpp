@@ -1,5 +1,9 @@
 #include "FolliageChunk.h"
 
+glm::vec3 lightDir = glm::normalize(glm::vec3(-1.0f, -1.0f, -0.5f)); // Direction inclinée
+glm::vec3 lightColor = glm::vec3(1.2f, 1.0f, 0.8f); // Lumière blanche chaude
+glm::vec3 ambientColor = glm::vec3(0.2f, 0.3f, 0.2f); // Lumière ambiante douce
+
 FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
 	: mCamera(camera), mPosition(position), mVbo(GL_ARRAY_BUFFER), mInstanceVbo(GL_ARRAY_BUFFER), mShader("Core/OpenGL/Shaders/grassVertexShader.glsl", "Core/OpenGL/Shaders/grassFragmentShader.glsl")
 {
@@ -34,7 +38,7 @@ FolliageChunk::FolliageChunk(Camera* camera, glm::vec3 position)
     mWindStrenghNoise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 
     std::srand(static_cast<unsigned>(std::time(nullptr)));
-    for (int i = 0; i < 3000 ; ++i) {
+    for (int i = 0; i < 4000 ; ++i) {
         float x = (rand() % 100) / 50.0f * CHUNK_SIZE;
         float y = (rand() % 100) / 50.0f * CHUNK_SIZE;
         float rotation = -(rand() % 90) * (PI / 180);
@@ -82,6 +86,10 @@ void FolliageChunk::Draw()
 
     mShader.SetMat4("u_MVP", mvp);
     mShader.SetFloat("u_timer", glfwGetTime());
+
+    mShader.SetVec3("u_LightDirection", lightDir);
+    mShader.SetVec3("u_LightColor", lightColor);
+    mShader.SetVec3("u_AmbientColor", ambientColor);
 
     mVao.Bind();
     glDrawArraysInstanced(GL_TRIANGLES, 0, mGrassBladeVertices.size() / 3, mGrassInstances.size()); 

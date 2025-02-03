@@ -10,11 +10,11 @@ FolliageChunkHandler::~FolliageChunkHandler()
 {
 }
 
-void FolliageChunkHandler::LoadChunks(unsigned int sizeX, unsigned int sizeY)
+void FolliageChunkHandler::LoadChunks(int sizeX, int sizeY)
 {
 	int count = 0;
-	for (int i = 0; i < sizeX; i++) {
-		for (int j = 0; j < sizeY; j++) {
+	for (int i = -sizeX; i < sizeX; i++) {
+		for (int j = -sizeY; j < sizeY; j++) {
 			glm::vec3 chunkPosition = glm::vec3(i * CHUNK_SIZE, j * CHUNK_SIZE, 0.0);
 			FolliageChunk* newChunk = new FolliageChunk(mCamera, chunkPosition);
 			mActiveChunks.push_back(newChunk);

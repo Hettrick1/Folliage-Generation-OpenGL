@@ -9,6 +9,7 @@ layout (location = 4) in float a_Bend;
 uniform mat4 u_MVP;
 uniform float u_timer;
 
+out vec3 v_Normal;
 out float v_HeightPercentage;
 
 float hash( vec2 a )
@@ -80,6 +81,10 @@ void main()
 
     vec4 rotatedPosition = rotationZMatrix * rotationXMatrix * vec4(a_Position, 1.0);
     vec4 worldPosition = vec4(a_InstancePosition, 1.0) + rotatedPosition;
+
+    vec3 normal = normalize(vec3(a_Position.x * 6, a_Position.y * 6, 1.0));
+
+    v_Normal = mat3(rotationXMatrix) * normal;
 
     gl_Position = u_MVP * worldPosition;
 }

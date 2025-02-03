@@ -24,7 +24,7 @@ class FolliageChunkHandler
 public:
 	FolliageChunkHandler(Camera* camera);
 	~FolliageChunkHandler();
-	void LoadChunks(unsigned int sizeX, unsigned int sizeY);
+	void LoadChunks(int sizeX, int sizeY);
 	void UpdateChunks();
 	void DrawChunks();
 private:
