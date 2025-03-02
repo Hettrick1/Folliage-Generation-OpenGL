@@ -21,15 +21,15 @@ float hash( vec2 a )
 
 float noise( vec2 U )
 {
-    vec2 id = floor( U );
-          U = fract( U );
-    U *= U * ( 3. - 2. * U );  
-
-    vec2 A = vec2( hash(id)            , hash(id + vec2(0,1)) ),  
-         B = vec2( hash(id + vec2(1,0)), hash(id + vec2(1,1)) ),  
-         C = mix( A, B, U.x);
-
-    return mix( C.x, C.y, U.y );
+    vec2 id = floor(U);
+    U = fract(U);
+    U *= U * (3.0 - 2.0 * U);
+    
+    vec2 A = vec2(hash(id), hash(id + vec2(0, 1)));
+    vec2 B = vec2(hash(id + vec2(1, 0)), hash(id + vec2(1, 1)));
+    float C = mix(A.x, A.y, U.y);
+    float D = mix(B.x, B.y, U.y);
+    return mix(C, D, U.x);
 }
 
 float remap(float value, float inMin, float inMax, float outMin, float outMax)
@@ -59,9 +59,6 @@ void main()
         bendRot = a_Bend * 0.1 * v_HeightPercentage;
     }
     float strengh = a_Strengh;
-
-    float windDir = noise(vec2((a_Position.x + a_InstancePosition.x) * 0.5 + 0.15 * u_timer, (a_Position.y + a_InstancePosition.y) * 0.5 + 0.15 * u_timer));
-    windDir = remap(windDir, -1.0, 1.0, 0.0, 6.28318);
 
     float windNoiseSample = noise(vec2((a_Position.x + a_InstancePosition.x) * 0.8 + u_timer, (a_Position.y + a_InstancePosition.y) * 0.8 + u_timer));
     
